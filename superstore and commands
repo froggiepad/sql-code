@@ -1,3 +1,4 @@
+<deatils> <summary) code for table used</summary>
 CREATE TABLE superstore (
     item_id INTEGER PRIMARY KEY,
     item_name TEXT,
@@ -24,48 +25,54 @@ VALUES
     (13, 'Slow Cooker', 'Appliances', 49.95, 30, 4.7),
     (14, 'Cutlery Set', 'Kitchen Supplies', 34.50, 40, 4.4),
     (15, 'Cozy Throw Blanket', 'Furnishings', 24.99, 100, 4.2);
+</details>
 
 
 
 
-
-
-
-
+1. Selecting average price from kitchen supplies 
 select AVG(price)
 from superstore
 where category= 'Kitchen Supplies'
 ;
+2. Ascending price and the rating of the item from the superstore 
 select item_name,price,average_rating
 from superstore
 group by category
 order by (price)ASC
 ;
+3. Stock quantity is ascending order 
 select item_name,stock_quantity
 from superstore
 group by category
 order by (stock_quantity) ASC
 ;
+4. Ascending rating on all items while showing price as well 
 select item_name,price,average_rating
 from superstore
 group by average_rating
 order by (average_rating) ASC
 ;
+5. Price of items greater than $100 in descending order
 select item_name,price,category
 from superstore
 where (price)>100
 order by (price)DESC
 ;
+6. Average price of all items in the store
 select avg (price)
 from superstore
 ;
+7. Sum of all the prices 
 select sum (price)
 from superstore
 ;
+8. How many coffee makers are currently in stock
 select item_name,stock_quantity
 from superstore
 where item_name ='Premium Coffee Maker'
 ;
+9. How many items are in the table
 select count (item_id)
 from superstore
 ;
