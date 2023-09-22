@@ -1,1 +1,1 @@
-# superstore-sql
+samples of sql coding and results 
