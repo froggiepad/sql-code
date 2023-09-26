@@ -1,0 +1,40 @@
+first is the 2 tables I created in sql
+
+CREATE TABLE actors (
+    name text,
+    age INTEGER,
+    movie_count INTEGER);
+
+INSERT INTO actors (name, age, movie_count)
+VALUES
+    ('Dolly Parton', 77, 11),
+    ('Mia Goth', 29, 18),
+    ('Hugo Weaving', 63, 42),
+    ('Zendaya', 27, 21),
+    ('Keanu Reeves', 59, 76),
+    ('Rosario Dawson', 44, 59),
+    ('Carrie Fisher', 60, 43)
+    ;
+  CREATE TABLE singers (
+    name text,
+    age integer,
+    album_count integer);
+ 
+ INSERT INTO singers (name, age, album_count)
+ Values 
+    ('Dolly Parton', 77, 48),
+    ('Zendaya', 27, 1),
+    ('Keanu Reeves', 59, 2),
+    ('100 Gecs', 29, 2),
+    ('Aretha Franklin' , 76, 38),
+    ('Freddie Mercury', 45, 17)
+    ;
+
+
+  who has the movie movie roles?
+  --who has the most movie roles?--
+select name, movie_count
+from actors
+order by movie_count desc
+;
+
