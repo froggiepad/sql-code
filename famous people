@@ -30,11 +30,23 @@ VALUES
     ('Freddie Mercury', 45, 17)
     ;
 
+--who is an actor AND a singer?--
+select a.name, a.actor_age, a.movie_count, s.age, s.album_count
+from actors as a
+left  outer join singers as s
+on a.name = s.name
+;
 
-  who has the movie movie roles?
   --who has the most movie roles?--
 select name, movie_count
 from actors
 order by movie_count desc
 ;
 
+
+--what is the average age for both tables?--
+select avg(a.actor_age), avg(s.age) 
+from actors as a
+left join singers as s
+on a.actor_age = s.age
+;
