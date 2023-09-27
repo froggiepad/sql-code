@@ -29,52 +29,53 @@ VALUES
 
 
 
-1. Selecting average price from kitchen supplies 
+--Selecting average price from kitchen supplies-- 
 select AVG(price)
 from superstore
 where category= 'Kitchen Supplies'
 ;
-2. Ascending price and the rating of the item from the superstore 
+--Ascending price and the rating of the item from the superstore-- 
 select item_name,price,average_rating
 from superstore
 group by category
 order by (price)ASC
 ;
-3. Stock quantity is ascending order 
+--Stock quantity is ascending order --
 select item_name,stock_quantity
 from superstore
 group by category
 order by (stock_quantity) ASC
 ;
-4. Ascending rating on all items while showing price as well 
+--Ascending rating on all items while showing price as well--
 select item_name,price,average_rating
 from superstore
 group by average_rating
 order by (average_rating) ASC
 ;
-5. Price of items greater than $100 in descending order
+--Price of items greater than $100 in descending order--
 select item_name,price,category
 from superstore
 where (price)>100
 order by (price)DESC
 ;
-6. Average price of all items in the store
+--Average price of all items in the store--
 select avg (price)
 from superstore
 ;
-7. Sum of all the prices 
+--Sum of all the prices--
 select sum (price)
 from superstore
 ;
-8. How many coffee makers are currently in stock
+--How many coffee makers are currently in stock--
 select item_name,stock_quantity
 from superstore
 where item_name ='Premium Coffee Maker'
 ;
-9. How many items are in the table
+--How many items are in the table--
 select count (item_id)
 from superstore
 ;
+--maximium price in the store--
 select max (price)
 from superstore
 ;
