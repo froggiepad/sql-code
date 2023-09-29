@@ -2,10 +2,10 @@ first is the 2 tables I created in sql
 
 CREATE TABLE actors (
     name text,
-    age INTEGER,
+    actor_age INTEGER,
     movie_count INTEGER);
 
-INSERT INTO actors (name, age, movie_count)
+INSERT INTO actors (name, actor_age, movie_count)
 VALUES
     ('Dolly Parton', 77, 11),
     ('Mia Goth', 29, 18),
