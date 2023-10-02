@@ -30,23 +30,48 @@ VALUES
     ('Freddie Mercury', 45, 17)
     ;
 
+
+
 --who is an actor AND a singer?--
-select a.name, a.actor_age, a.movie_count, s.age, s.album_count
+select a.a_name, a.actor_age, a.movie_count, s.age, s.album_count
 from actors as a
 left  outer join singers as s
-on a.name = s.name
+on a.a_name = s.name
+where album_count <> ' '
 ;
 
-  --who has the most movie roles?--
-select name, movie_count
+  --who has the most movie roles? least?--
+select a_name, movie_count
 from actors
 order by movie_count desc
+limit 1
+;
+select a_name, movie_count
+from actors
+order by movie_count asc
+limit 1
 ;
 
+--how many albums total has everyone on the singers side have?--
+select sum(album_count)
+from singers
+;
 
 --what is the average age for both tables?--
-select avg(a.actor_age), avg(s.age) 
+select sum(actor_age)/count(a_name), sum(age)/count(name)
 from actors as a
 left join singers as s
-on a.actor_age = s.age
+on a.a_name = s.name
+;
+
+--who is the youngest person on both tables? who are they?--
+select a_name, actor_age
+from actors 
+order by actor_age asc
+limit 1
+;
+select name, age 
+from singers
+order by age asc
+limit 1
 ;
