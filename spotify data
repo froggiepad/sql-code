@@ -123,3 +123,15 @@ from bit_db.spotifydata
 order by danceability desc
 limit 10
 ;
+--what is the average popularity of the artists, and if they're above 90 they fall under the 'top star' category?
+with popular_avg_cte as (
+select s.artist_name, avg(s.popularity) as avg_pop
+from spotifydata as s
+group by s.artist_name
+)
+select artist_name, avg_pop, 'Top Star' as tag
+from popular_avg_cte
+where avg_pop >= 90
+order by avg_pop desc
+limit 5
+;
