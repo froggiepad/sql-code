@@ -1,0 +1,169 @@
+select * 
+from chinook.media_types
+;
+select *
+from chinook.invoices
+;
+select *
+from chinook.invoice_items
+;
+select *
+from chinook.genres
+;
+--show customers not in the US--
+select lastname, customerid, country
+from chinook.customers
+where country <> 'USA'
+order by customerid asc
+;
+
+--show only customers in France--
+select lastname, customerid, country
+from chinook.customers
+where country = 'France'
+order by customerid asc
+;
+
+--find the invoices of the customers from France--
+select cust.lastname, cust.customerid, cust.country, inv.billingaddress, inv.invoicedate, inv.billingcity
+from chinook.customers as cust
+join chinook.invoices as inv
+on cust.customerid = inv.customerid
+where cust.country = 'France'
+;
+
+--show employees who are sales agents, and who they report to--
+select employeeid, lastname, title, reportsto
+from chinook.employees
+where title = "Sales Support Agent"
+order by employeeid asc
+;
+
+--find a distinct list of billing countries--
+select distinct billingcountry
+from chinook.invoices
+;
+
+--show invoices associated with each sales agent--
+select emp.lastname, emp.firstname, emp.employeeid, inv.invoiceid
+from chinook.employees as emp
+join chinook.customers as cust on cust.supportrepid = emp.employeeid
+join chinook.invoices as inv on inv.customerid = cust.customerid
+;
+
+--show invoices associated with each sales agent--
+select inv.total, cust.firstname, cust.lastname, emp.firstname as empname, emp.lastname, cust.country
+from chinook.employees as emp
+join chinook.customers as cust on cust.supportrepid = emp.employeeid
+join chinook.invoices as inv on inv.customerid = cust.customerid
+;
+
+--how many invoices in 2009?--
+select count(invoiceid)
+from chinook.invoices
+where invoicedate between '2009-01-01' and '2009-12-31'
+;
+
+--total sales in 2009?--
+select sum(total)
+from chinook.invoices
+where invoicedate between '2009-01-01' and '2009-12-31'
+;
+
+--show purchased track number with each invoice line ID--
+select trk.name, ii.invoicelineid
+from chinook.invoice_items as ii
+join chinook.tracks as trk
+on ii.trackid = trk.trackid
+order by ii.invoicelineid desc
+;
+
+--show track name, artist name, and genre per invoiec line ID--
+select artists.name as artist, trk.name as track, genres.name as genre, ii.invoicelineid, ii.invoiceid as invoicenum
+from chinook.invoice_items as ii
+left join chinook.tracks as trk on ii.trackid = trk.trackid
+inner join chinook.albums as alb on alb.albumid = trk.trackid
+left join chinook.artists on artists.ArtistId = alb.artistid
+left join chinook.genres on genres.genreid = trk.genreid
+order by invoicenum desc
+;
+
+--show tracks, album name, media type, and genre--
+select art.name as artist, trk.name as track, genres.name as genre, albums.title as album, media_types.name as media_type
+from chinook.artists as art
+inner join chinook.tracks as trk on trk.albumid = albums.AlbumId
+left join chinook.albums on albums.artistid = art.artistid 
+left join chinook.genres on genres.GenreId = trk.genreid
+left join chinook.media_types on media_types.MediaTypeId = trk.mediatypeid
+;
+
+--show total sales made by each sales agent--
+select emp.firstname, emp.lastname, round(sum(inv.total),2) as 'total sales'
+from chinook.employees as emp
+join chinook.customers as cust on cust.supportrepid = emp.employeeid
+join chinook.invoices as inv on inv.customerid = cust.customerid
+where emp.title = 'Sales Support Agent'
+group by emp.firstname
+;
+
+--which agent made the most revenue in 2009--
+select emp.firstname, emp.lastname, round(sum(inv.total), 2) as 'total sales'
+from chinook.employees as emp
+join chinook.customers on customers.supportrepid = emp.employeeid
+join chinook.invoices as inv on inv.customerid = customers.customerid
+where emp.title = 'Sales Support Agent'
+and inv.invoicedate like '2009%'
+group by emp.firstname
+order by (round(sum(inv.total), 2)) desc 
+limit 1
+;
+
+--what was the most purchased genre?--
+select genres.name as genre, round(sum(inv.total), 2) as 'total sales'
+from chinook.invoices as inv
+left join chinook.genres on genres.genreid = trk.genreid
+inner join chinook.tracks as trk on genres.GenreId = trk.genreid
+group by genres.Name
+order by (round(sum(inv.total), 2)) desc 
+limit 3
+;
+
+--which country had the most sales? least?--
+select billingcountry, sum(total)
+from chinook.invoices 
+group by billingcountry
+order by (sum(total)) desc
+limit 1
+;
+select billingcountry, sum(total)
+from chinook.invoices
+group by billingcountry
+order by (sum(total)) asc
+limit 1
+;
+
+--how many playlists are there?--
+select count(playlistid)
+from chinook.playlists
+;
+
+--did the agent with the most sales of all the years recorded have a tenure above 3 years?--
+select emp.firstname, emp.lastname, emp.hiredate, round(sum(inv.total), 2) as 'total sales'
+from chinook.employees as emp
+join chinook.customers on customers.supportrepid = emp.employeeid
+join chinook.invoices as inv on inv.customerid = customers.customerid
+where emp.title = 'Sales Support Agent'
+group by emp.firstname
+order by (round(sum(inv.total), 2)) desc 
+limit 1
+;
+
+--what was the LEAST purchased media type?--
+select mt.name, round(sum(inv.total), 2) as 'total sales'
+from chinook.invoices as inv
+left join chinook.tracks as trk on mt.mediatypeid = trk.mediatypeid
+inner join chinook.media_types as mt on mt.mediatypeid = trk.mediatypeid
+group by mt.Name
+order by (round(sum(inv.total), 2)) asc 
+limit 1
+;
