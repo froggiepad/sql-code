@@ -1,15 +1,3 @@
-select * 
-from chinook.media_types
-;
-select *
-from chinook.invoices
-;
-select *
-from chinook.invoice_items
-;
-select *
-from chinook.genres
-;
 --show customers not in the US--
 select lastname, customerid, country
 from chinook.customers
