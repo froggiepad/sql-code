@@ -1,1 +1,33 @@
+--Data downloaded from Kaggle using https://www.kaggle.com/datasets/syedasimalishah/starbucks-drinks?resource=download"
+--First imported the data into SQLiteStudio, changed the formatting on the column names to better fit formatting needs (ie; Trans Fat (g) column was formatted as Total_fat, same with Trans Fat, %DV columns and Caborhydrates)--
 
+--Below are queries ran in SQL--
+
+select *
+from starbucks_drinks
+;
+
+--what drink has the most fat content? and then the least?--
+select Beverage, Beverage_category, MAX(Total_Fat)
+from starbucks_drinks
+;
+select Beverage, Beverage_category, Total_fat, Beverage_prep
+from starbucks_drinks
+order by Total_fat desc
+limit 1
+;
+
+select Beverage, Beverage_category, MIN(Total_Fat)
+from starbucks_drinks
+;
+select Beverage, Beverage_category, Total_fat, Beverage_prep
+from starbucks_drinks
+order by total_fat asc
+limit 1
+;
+
+--how many drinks are prepped with soy milk?--
+select count(*)
+from starbucks_drinks
+where beverage_prep like "%soy%"
+;
