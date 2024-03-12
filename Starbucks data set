@@ -2,7 +2,6 @@
 --First imported the data into SQLiteStudio, changed the formatting on the column names to better fit formatting needs (ie; Trans Fat (g) column was formatted as Total_fat, same with Trans Fat, %DV columns and Caborhydrates)--
 
 --Below are queries ran in SQL--
-
 select *
 from starbucks_drinks
 ;
@@ -30,4 +29,36 @@ limit 1
 select count(*)
 from starbucks_drinks
 where beverage_prep like "%soy%"
+;
+
+--what is the most common size of cup on the table?--
+select COUNT(*), beverage_prep
+from starbucks_drinks
+where beverage_prep not like '%milk%'
+group by beverage_prep
+order by COUNT(*) desc
+limit 1
+;
+
+--what is the least common beverage category?--
+select beverage_category
+from starbucks_drinks
+;
+select distinct beverage_category, count(*)
+from starbucks_drinks
+group by beverage_category
+order by count(*) asc
+;
+
+--what has the most sugar? does it also have a high amount of carbs?--
+select beverage, sugars, total_carbohydrates
+from starbucks_drinks
+order by sugars desc
+limit 3
+;
+
+--what's the lowest and highest amount of protein?--
+select protein, beverage, beverage_prep
+from starbucks_drinks
+order by protein asc
 ;
